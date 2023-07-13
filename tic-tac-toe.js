@@ -6,16 +6,35 @@ const gameboard = (() => {
     let gboardArrX = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
     let gboardArrO = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
     let playArea = document.querySelector('.gboard');
+    let playAreaX = document.querySelector('#xDump');
+    let playAreaO = document.querySelector('#oDump');
     let xFill = "";
-    let yFill = "";
-    let i = 0;
+    let oFill = "";
+    
 
-    while (i < gboardArrX.length) {
-      xFill += gboardArrX[i];
-      i++;
+    function fillBoardX() {
+      let i = 0;
+
+      while (i < gboardArrX.length) {
+        xFill += gboardArrX[i];
+        i++;
+      }
+
+      playAreaX.innerText = xFill;
     }
 
-    return playArea.innerText = xFill;
+    function fillBoardO() {
+      let i = 0;
+
+      while (i < gboardArrO.length) {
+        oFill += gboardArrO[i];
+        i++;
+      }
+
+      playAreaO.innerText = oFill;
+    }
+
+    return fillBoardX(), fillBoardO();
   })();
 
 
