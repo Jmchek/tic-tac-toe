@@ -7,20 +7,35 @@
     <link rel="stylesheet" href="tic-tac-toe.css">
 </head>
 <body>
-    <input class="toggle" type="checkbox" />
+    <div class="left-panel">
+        <div class="playerNames">
+            <h2>Enter player names:</h2>
+            <input type="text" id="playerOne" placeholder="Player One"/>
+            <input type="text" id="playerTwo" placeholder="Player Two"/>
+        </div>
+    </div>
+    
+    <h1>Tic-Tac-Toe</h1>
+
+    <div class="toggleContainer">
+        <h2>X or O? Decide!</h2>
+        <input class="toggle" type="checkbox" />
+    </div>
+    
+
     <div class="gboard">
         <!-- <p id="xDump"></p>
         <p id="oDump"></p> -->
 
-        <div class="tiles" id="one"></div>
-        <div class="tiles" id="two"></div>
-        <div class="tiles" id="three"></div>
-        <div class="tiles" id="four"></div>
+        <div class="tiles left-border top-border" id="one"></div>
+        <div class="tiles top-border" id="two"></div>
+        <div class="tiles top-border right-border" id="three"></div>
+        <div class="tiles left-border" id="four"></div>
         <div class="tiles" id="five"></div>
-        <div class="tiles" id="six"></div>
-        <div class="tiles" id="seven"></div>
-        <div class="tiles" id="eight"></div>
-        <div class="tiles" id="nine"></div>
+        <div class="tiles right-border" id="six"></div>
+        <div class="tiles left-border bot-border" id="seven"></div>
+        <div class="tiles bot-border" id="eight"></div>
+        <div class="tiles right-border bot-border" id="nine"></div>
     </div>
 </body>
 <script src="tic-tac-toe.js"></script>

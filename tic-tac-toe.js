@@ -1,46 +1,48 @@
-//make fillBoardX work with new gameboard tileGrabber
+
 
 //gameboard is a module
 const gameboard = (() => {
+    const toggleSwitch = document.querySelector('.toggle');
     let gboardArrX = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
     // let gboardArrO = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
-    // let playArea = document.querySelector('.gboard');
-    // let playAreaX = document.querySelector('#xDump');
-    // let playAreaO = document.querySelector('#oDump');
-    // let xFill = "";
-    // let oFill = "";
     let gameInSession = false;
     let toggleForm = "X";
 
     //tiles
-    let tileGrabber = document.querySelectorAll('.tiles');
+    const tileGrabber = document.querySelectorAll('.tiles');
 
     tileGrabber.forEach((tile, index) => {
       tile.addEventListener('click', () => {
-        //if toggle form for game is 'x'
-        //fill the tile matching id with 'x'
-        // console.log(`${index}: ${tile}`);
-        toggleForm == "X" ? fillBoardX(index) : fillBoardO();
+        toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
       });
     });
     
-
+    
     function fillBoardX(someTileIndex) {
-      tileGrabber[someTileIndex].innerText = "hello there";
+      if (!tileGrabber[someTileIndex].innerText && toggleForm == "X") {
+        tileGrabber[someTileIndex].innerText = "X";
+      }
+    }
+    
+    
+
+    function fillBoardO(someTileIndex) {
+      if (!tileGrabber[someTileIndex].innerText && toggleForm == "O") {
+        tileGrabber[someTileIndex].innerText = "O";
+      }
     }
 
-    function fillBoardO() {
-      // let i = 0;
+    //toggleSwitch
+    toggleSwitch.addEventListener('click', () => {
+      if (toggleForm == "X") {
+        toggleForm = "O";
+      } else {
+        toggleForm = "X";
+      }
+      console.log(toggleForm);
+    });
 
-      // while (i < gboardArrO.length) {
-      //   oFill += gboardArrO[i];
-      //   i++;
-      // }
-
-      // playAreaO.innerText = oFill;
-    }
-
-    return fillBoardX, fillBoardO();
+    return fillBoardX, fillBoardO;
   })();
 
 
