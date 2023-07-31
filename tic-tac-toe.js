@@ -22,6 +22,8 @@ const gameboard = (() => {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "X") {
         tileGrabber[someTileIndex].innerText = "X";
         gboardArrX.pop();
+        gameController.gameChecker();
+        gameController.matchCountX++;
       }
     }
     
@@ -31,6 +33,8 @@ const gameboard = (() => {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "O") {
         tileGrabber[someTileIndex].innerText = "O";
         gboardArrO.pop();
+        gameController.gameChecker();
+        gameController.matchCountO++;
       }
     }
 
@@ -45,8 +49,6 @@ const gameboard = (() => {
     });
 
     return {
-      fillBoardX,
-      fillBoardO,
       tileGrabber,
       gboardArrO,
       gboardArrX
@@ -70,13 +72,29 @@ const playerMaker = (name, age) => {
 //gameController is a module
 const gameController = (() => {
   this.tileGrabber = gameboard.tileGrabber;
-  this.gboardArrO = gameboard.gboardArrO;
-  this.gboardArrX = gameboard.gboardArrX;
-
-  //when the player's arrays lengths become 2, check the game state
+  let matchingRow = false;
+  let matchCountX = 0;
+  let matchCountO = 0;
+  
   function gameChecker() {
 
+    //working here
+    //once we have 3 of either x or o, we check the game state
+
+    // tileGrabber.forEach(x => {
+      
+    // });
+
+    // //first check if there are any 3 in a rows
+    // switch(matchingRow) {
+    //   case ''
+    // }
+
+    //when the player's arrays lengths become 2, check the game state
+    // if (gameboard.gboardArrX.length <= 2 || gameboard.gboardArrO.length <= 2) {
+      
+    // }
   };
   
-    return console.log(gboardArrO.length);
+    return {gameChecker, matchCountX, matchCountO};
   })();
