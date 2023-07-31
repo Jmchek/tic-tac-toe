@@ -4,9 +4,9 @@
 const gameboard = (() => {
     const toggleSwitch = document.querySelector('.toggle');
     let gboardArrX = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'];
-    // let gboardArrO = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
-    let gameInSession = false;
+    let gboardArrO = ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
     let toggleForm = "X";
+
 
     //tiles
     const tileGrabber = document.querySelectorAll('.tiles');
@@ -21,6 +21,7 @@ const gameboard = (() => {
     function fillBoardX(someTileIndex) {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "X") {
         tileGrabber[someTileIndex].innerText = "X";
+        gboardArrX.pop();
       }
     }
     
@@ -29,6 +30,7 @@ const gameboard = (() => {
     function fillBoardO(someTileIndex) {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "O") {
         tileGrabber[someTileIndex].innerText = "O";
+        gboardArrO.pop();
       }
     }
 
@@ -42,7 +44,13 @@ const gameboard = (() => {
       console.log(toggleForm);
     });
 
-    return fillBoardX, fillBoardO;
+    return {
+      fillBoardX,
+      fillBoardO,
+      tileGrabber,
+      gboardArrO,
+      gboardArrX
+    };
   })();
 
 
@@ -52,15 +60,23 @@ const playerMaker = (name, age) => {
     return { name, age, sayHello };
 };
 
-const jeff = playerMaker('jeff', 27);
+// const jeff = playerMaker('jeff', 27);
 
-console.log(jeff.name); // 'jeff'
+// console.log(jeff.name); // 'jeff'
 
-jeff.sayHello();
+// jeff.sayHello();
 
 
 //gameController is a module
 const gameController = (() => {
+  this.tileGrabber = gameboard.tileGrabber;
+  this.gboardArrO = gameboard.gboardArrO;
+  this.gboardArrX = gameboard.gboardArrX;
 
-    return console.log("gameController works");
+  //when the player's arrays lengths become 2, check the game state
+  function gameChecker() {
+
+  };
+  
+    return console.log(gboardArrO.length);
   })();
