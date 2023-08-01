@@ -22,8 +22,8 @@ const gameboard = (() => {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "X") {
         tileGrabber[someTileIndex].innerText = "X";
         gboardArrX.pop();
-        gameController.gameChecker();
         gameController.matchCountX++;
+        gameController.gameChecker();
       }
     }
     
@@ -33,8 +33,8 @@ const gameboard = (() => {
       if (!tileGrabber[someTileIndex].innerText && toggleForm == "O") {
         tileGrabber[someTileIndex].innerText = "O";
         gboardArrO.pop();
-        gameController.gameChecker();
         gameController.matchCountO++;
+        gameController.gameChecker();
       }
     }
 
@@ -72,28 +72,35 @@ const playerMaker = (name, age) => {
 //gameController is a module
 const gameController = (() => {
   this.tileGrabber = gameboard.tileGrabber;
-  let matchingRow = false;
+  // let matchingRow = false;
   let matchCountX = 0;
   let matchCountO = 0;
+
+  let tileArr = [];
   
   function gameChecker() {
 
-    //working here
-    //once we have 3 of either x or o, we check the game state
+    //game checker
+    tileGrabber.forEach(x => {
+      //when the match count for either x or o gets to 3 check the tiles
+      //is match count 3?
+      // then check each tile for where the x or o is
+      // if the tiles match across any of the 8 lines, do something
+      if(tileArr.length < 9) {
+        tileArr.push(x);
+      }
 
-    // tileGrabber.forEach(x => {
-      
-    // });
+      if(this.matchCountX == 3 || this.matchCountO == 3) {
+        
+        //loop through our tile array
+        tileArr.forEach((y, i) => {
+          if(y.innerText == "X") {
+            console.log(i);
+          }
+        });
 
-    // //first check if there are any 3 in a rows
-    // switch(matchingRow) {
-    //   case ''
-    // }
-
-    //when the player's arrays lengths become 2, check the game state
-    // if (gameboard.gboardArrX.length <= 2 || gameboard.gboardArrO.length <= 2) {
-      
-    // }
+      }
+    });
   };
   
     return {gameChecker, matchCountX, matchCountO};
