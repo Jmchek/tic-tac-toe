@@ -45,7 +45,6 @@ const gameboard = (() => {
       } else {
         toggleForm = "X";
       }
-      console.log(toggleForm);
     });
 
     return {
@@ -75,10 +74,14 @@ const gameController = (() => {
   // let matchingRow = false;
   let matchCountX = 0;
   let matchCountO = 0;
+  let winnerDetermined = false;
 
   let tileArr = [];
+  let winnerArrX = [];
+  let winnerArrO = [];
   
   function gameChecker() {
+    tileArr = [];
 
     //game checker
     tileGrabber.forEach(x => {
@@ -89,19 +92,64 @@ const gameController = (() => {
       if(tileArr.length < 9) {
         tileArr.push(x);
       }
-
-      if(this.matchCountX == 3 || this.matchCountO == 3) {
-        
-        //loop through our tile array
-        tileArr.forEach((y, i) => {
-          if(y.innerText == "X") {
-            console.log(i);
-          }
-        });
-
-      }
     });
+
+    if(this.matchCountX >= 3 || this.matchCountO >= 3 || !winnerDetermined) {
+      winnerArrX = [];
+      winnerArrO = [];
+
+      //loop through our tile array
+      tileArr.forEach((y, i) => {
+
+        if(y.innerText == "X") {
+          winnerArrX.push(++i);
+        } else if (y.innerText == "O") {
+          winnerArrO.push(++i);
+        }
+      });
+    }
+
+    //win finder
+    if(winnerArrX.length >= 3 || winnerArrO.length >= 3 || !winnerDetermined) {
+      switch(true) {
+        //horizontal
+        case (winnerArrX.includes(1) && winnerArrX.includes(2) && winnerArrX.includes(3)) || (winnerArrO.includes(1) && winnerArrO.includes(2) && winnerArrO.includes(3)): 
+          console.log("win");
+          winnerDetermined = true;
+          break;
+        case '4,5,6':
+          console.log("win");
+          break;
+        case '7,8,9':
+          console.log("win");
+          break;
+        //vertical
+        case '1,4,7':
+          console.log("win");
+          break;
+        case '2,5,8':
+          console.log("win");
+          break;
+        case '3,6,9':
+          console.log("win");
+          break;
+        //across
+        case '1,5,9':
+          console.log("win");
+          break;
+        case '3,5,7':
+          console.log("win");
+          break;
+        default:
+          {console.log(winnerArrX.toString());}
+      }
+
+      
+    }
+    
   };
+
+  
   
     return {gameChecker, matchCountX, matchCountO};
   })();
