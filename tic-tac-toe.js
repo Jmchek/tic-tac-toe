@@ -156,7 +156,7 @@ const gameController = (() => {
           winnerDetermined = true;
           break;
         default:
-          {console.log(winnerArrX.toString());}
+          {if(!winnerDetermined && this.matchCountX > 3 && this.matchCountO > 3) {console.log("Cat's scratch!")};}
       }
 
       
