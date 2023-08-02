@@ -113,32 +113,47 @@ const gameController = (() => {
     if(winnerArrX.length >= 3 || winnerArrO.length >= 3 || !winnerDetermined) {
       switch(true) {
         //horizontal
-        case (winnerArrX.includes(1) && winnerArrX.includes(2) && winnerArrX.includes(3)) || (winnerArrO.includes(1) && winnerArrO.includes(2) && winnerArrO.includes(3)): 
+        case (winnerArrX.includes(1) && winnerArrX.includes(2) && winnerArrX.includes(3)) || 
+        (winnerArrO.includes(1) && winnerArrO.includes(2) && winnerArrO.includes(3)): 
           console.log("win");
           winnerDetermined = true;
           break;
-        case '4,5,6':
+        case (winnerArrX.includes(4) && winnerArrX.includes(5) && winnerArrX.includes(6)) || 
+        (winnerArrO.includes(4) && winnerArrO.includes(5) && winnerArrO.includes(6)):
           console.log("win");
+          winnerDetermined = true;
           break;
-        case '7,8,9':
+        case (winnerArrX.includes(7) && winnerArrX.includes(8) && winnerArrX.includes(9)) || 
+        (winnerArrO.includes(7) && winnerArrO.includes(8) && winnerArrO.includes(9)):
           console.log("win");
+          winnerDetermined = true;
           break;
         //vertical
-        case '1,4,7':
+        case (winnerArrX.includes(1) && winnerArrX.includes(4) && winnerArrX.includes(7)) || 
+        (winnerArrO.includes(1) && winnerArrO.includes(4) && winnerArrO.includes(7)):
           console.log("win");
+          winnerDetermined = true;
           break;
-        case '2,5,8':
+        case (winnerArrX.includes(2) && winnerArrX.includes(5) && winnerArrX.includes(8)) || 
+        (winnerArrO.includes(2) && winnerArrO.includes(5) && winnerArrO.includes(8)):
           console.log("win");
+          winnerDetermined = true;
           break;
-        case '3,6,9':
+        case (winnerArrX.includes(3) && winnerArrX.includes(6) && winnerArrX.includes(9)) || 
+        (winnerArrO.includes(3) && winnerArrO.includes(6) && winnerArrO.includes(9)):
           console.log("win");
+          winnerDetermined = true;
           break;
         //across
-        case '1,5,9':
+        case (winnerArrX.includes(1) && winnerArrX.includes(5) && winnerArrX.includes(9)) || 
+        (winnerArrO.includes(1) && winnerArrO.includes(5) && winnerArrO.includes(9)):
           console.log("win");
+          winnerDetermined = true;
           break;
-        case '3,5,7':
+        case (winnerArrX.includes(3) && winnerArrX.includes(5) && winnerArrX.includes(7)) || 
+        (winnerArrO.includes(3) && winnerArrO.includes(5) && winnerArrO.includes(7)):
           console.log("win");
+          winnerDetermined = true;
           break;
         default:
           {console.log(winnerArrX.toString());}
