@@ -71,6 +71,9 @@ const playerMaker = (name, age) => {
 //gameController is a module
 const gameController = (() => {
   this.tileGrabber = gameboard.tileGrabber;
+  const startBtnGrbbr = document.querySelector('#start');
+  const hiddenToggleContainer = document.querySelector('.toggleHideHolder');
+  const toggleContainer = document.querySelector('.toggleContainer');
   // let matchingRow = false;
   let matchCountX = 0;
   let matchCountO = 0;
@@ -158,12 +161,14 @@ const gameController = (() => {
         default:
           {if(!winnerDetermined && this.matchCountX > 3 && this.matchCountO > 3) {console.log("Cat's scratch!")};}
       }
-
-      
     }
-    
   };
 
+  startBtnGrbbr.addEventListener('click', () => {
+    console.log('hello');
+    toggleContainer.classList.remove('toggleHide');
+    hiddenToggleContainer.classList.add('toggleHide');
+  });
   
   
     return {gameChecker, matchCountX, matchCountO};

@@ -27,8 +27,13 @@ body > h1 {
   justify-items: center;
 }
 
+
 .toggleContainer > h2 {
   width: 100%;
+}
+
+.toggleHide {
+  display: none;
 }
 
 .toggle {

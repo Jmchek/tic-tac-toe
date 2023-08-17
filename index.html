@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class="left-panel">
-        <!-- <div class="gameButton">
-            <input type="button" value="Restart">
-        </div> -->
+        <div class="playerNames">
+            <h2>Game:</h2>
+            <input type="button" id="start" value="Start"/>
+            <input type="button" id="restart" value="Restart"/>
+        </div>
         <div class="playerNames">
             <h2>Enter player names:</h2>
             <input type="text" id="playerOne" placeholder="Player One"/>
@@ -20,7 +22,9 @@
     
     <h1>Tic-Tac-Toe</h1>
 
-    <div class="toggleContainer">
+    <div class="toggleHideHolder"></div>
+
+    <div class="toggleContainer toggleHide">
         <h2>X or O? Decide!</h2>
         <input class="toggle" type="checkbox" />
     </div>
