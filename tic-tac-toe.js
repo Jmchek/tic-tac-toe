@@ -72,8 +72,10 @@ const playerMaker = (name, age) => {
 const gameController = (() => {
   this.tileGrabber = gameboard.tileGrabber;
   const startBtnGrbbr = document.querySelector('#start');
+  const restartBtnGrbbr = document.querySelector('#restart');
   const hiddenToggleContainer = document.querySelector('.toggleHideHolder');
   const toggleContainer = document.querySelector('.toggleContainer');
+  const playerNames = document.querySelector('#playerNames');
   // let matchingRow = false;
   let matchCountX = 0;
   let matchCountO = 0;
@@ -164,10 +166,17 @@ const gameController = (() => {
     }
   };
 
+  //game start/restart
   startBtnGrbbr.addEventListener('click', () => {
-    console.log('hello');
     toggleContainer.classList.remove('toggleHide');
     hiddenToggleContainer.classList.add('toggleHide');
+    playerNames.setAttribute('style', 'visibility: visible;');
+  });
+
+  restartBtnGrbbr.addEventListener('click', () => {
+    toggleContainer.classList.add('toggleHide');
+    hiddenToggleContainer.classList.remove('toggleHide');
+    playerNames.setAttribute('style', 'visibility: hidden;');
   });
   
   
