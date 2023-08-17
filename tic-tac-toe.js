@@ -56,9 +56,9 @@ const gameboard = (() => {
 
 
 //playerMaker is a factory
-const playerMaker = (name, age) => {
-    const sayHello = () => console.log(name + ' says: "playerMaker works"');
-    return { name, age, sayHello };
+const playerMaker = (name) => {
+    const declareWinner = () => console.log(name + ' wins the game!');
+    return { name, declareWinner };
 };
 
 // const jeff = playerMaker('jeff', 27);
@@ -76,10 +76,15 @@ const gameController = (() => {
   const hiddenToggleContainer = document.querySelector('.toggleHideHolder');
   const toggleContainer = document.querySelector('.toggleContainer');
   const playerNames = document.querySelector('#playerNames');
-  // let matchingRow = false;
+  const playerOneNameGrbbr = document.querySelector('#playerOne');
+  const playerTwoNameGrbbr = document.querySelector('#playerTwo');
+  const playerLockIn = document.querySelector('#playerNameLockIn');
   let matchCountX = 0;
   let matchCountO = 0;
   let winnerDetermined = false;
+
+  let playerOneName = "";
+  let playerTwoName = "";
 
   let tileArr = [];
   let winnerArrX = [];
@@ -178,7 +183,17 @@ const gameController = (() => {
     hiddenToggleContainer.classList.remove('toggleHide');
     playerNames.setAttribute('style', 'visibility: hidden;');
   });
+
+
+  //player creator
+  //working here
+  playerLockIn.addEventListener('click', () => {
+    console.log(playerOneNameGrbbr.value);
+    console.log(playerTwoNameGrbbr.value);
+    playerOneName = playerMaker(playerOneNameGrbbr.value);
+    playerTwoName = playerMaker(playerTwoNameGrbbr.value);
+  });
   
   
-    return {gameChecker, matchCountX, matchCountO};
+    return {gameChecker, matchCountX, matchCountO, playerOneName, playerTwoName};
   })();
