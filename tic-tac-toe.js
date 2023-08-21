@@ -65,8 +65,6 @@ const playerMaker = (name) => {
 
 // console.log(jeff.name); // 'jeff'
 
-// jeff.sayHello();
-
 
 //gameController is a module
 const gameController = (() => {
@@ -79,12 +77,12 @@ const gameController = (() => {
   const playerOneNameGrbbr = document.querySelector('#playerOne');
   const playerTwoNameGrbbr = document.querySelector('#playerTwo');
   const playerLockIn = document.querySelector('#playerNameLockIn');
+  const namesUnderTitleGrbbr = document.querySelector('.namesUnderTitle');
   let matchCountX = 0;
   let matchCountO = 0;
   let winnerDetermined = false;
 
-  let playerOneName = "";
-  let playerTwoName = "";
+  let playerOneName, playerTwoName;
 
   let tileArr = [];
   let winnerArrX = [];
@@ -186,14 +184,19 @@ const gameController = (() => {
 
 
   //player creator
-  //working here
+  function playerCreation(firstName, secName) {
+    this.playerOneName = playerMaker(firstName);
+    this.playerTwoName = playerMaker(secName);
+
+    namesUnderTitleGrbbr.classList.remove('toggleHide');
+    playerNames.setAttribute('style', 'visibility: hidden;');
+    namesUnderTitleGrbbr.innerText = firstName + "\n" + " vs " + "\n" + secName;
+  }
+
   playerLockIn.addEventListener('click', () => {
-    console.log(playerOneNameGrbbr.value);
-    console.log(playerTwoNameGrbbr.value);
-    playerOneName = playerMaker(playerOneNameGrbbr.value);
-    playerTwoName = playerMaker(playerTwoNameGrbbr.value);
+    playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
   });
   
   
-    return {gameChecker, matchCountX, matchCountO, playerOneName, playerTwoName};
+    return {gameChecker, matchCountX, matchCountO, playerCreation};
   })();

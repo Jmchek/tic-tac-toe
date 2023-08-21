@@ -36,6 +36,10 @@ body > h1 {
   display: none;
 }
 
+.toggleHideNotWorking {
+  visibility: hidden;
+}
+
 .toggle {
     -webkit-appearance: none;
     -moz-appearance: none;
