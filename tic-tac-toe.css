@@ -34,6 +34,7 @@ body > h1 {
 
 .toggleHide {
   display: none;
+  visibility: hidden;
 }
 
 .toggleHideNotWorking {
@@ -146,4 +147,21 @@ body > h1 {
 
 div + #playerNames {
   visibility: hidden;
+}
+
+.namesUnderTitle {
+  display: grid;
+  gap: 20px;
+
+  grid-row-start: 2;
+
+  font-size: xx-large;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+
+  justify-content: center;
+  justify-items: center;
+
+  margin: 20px;
 }

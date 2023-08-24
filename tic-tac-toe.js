@@ -38,6 +38,10 @@ const gameboard = (() => {
       }
     }
 
+    function findFirstChoice() {
+      return toggleForm;
+    }
+
     //toggleSwitch
     toggleSwitch.addEventListener('click', () => {
       if (toggleForm == "X") {
@@ -45,12 +49,17 @@ const gameboard = (() => {
       } else {
         toggleForm = "X";
       }
+
+      console.log(findFirstChoice());
+
     });
 
     return {
       tileGrabber,
       gboardArrO,
-      gboardArrX
+      gboardArrX,
+      toggleSwitch,
+      findFirstChoice
     };
   })();
 
@@ -68,6 +77,7 @@ const playerMaker = (name) => {
 
 //gameController is a module
 const gameController = (() => {
+  this.toggleSwitch = gameboard.toggleSwitch;
   this.tileGrabber = gameboard.tileGrabber;
   const startBtnGrbbr = document.querySelector('#start');
   const restartBtnGrbbr = document.querySelector('#restart');
@@ -78,9 +88,13 @@ const gameController = (() => {
   const playerTwoNameGrbbr = document.querySelector('#playerTwo');
   const playerLockIn = document.querySelector('#playerNameLockIn');
   const namesUnderTitleGrbbr = document.querySelector('.namesUnderTitle');
+  const firstNameGrbbr = document.querySelector('.namesUnderTitle :first-child');
+  const secNameGrbbr = document.querySelector('.namesUnderTitle :nth-child(3)');
   let matchCountX = 0;
   let matchCountO = 0;
   let winnerDetermined = false;
+  let firstChosenTile;
+  let secChosenTile;
 
   let playerOneName, playerTwoName;
 
@@ -93,10 +107,6 @@ const gameController = (() => {
 
     //game checker
     tileGrabber.forEach(x => {
-      //when the match count for either x or o gets to 3 check the tiles
-      //is match count 3?
-      // then check each tile for where the x or o is
-      // if the tiles match across any of the 8 lines, do something
       if(tileArr.length < 9) {
         tileArr.push(x);
       }
@@ -190,10 +200,20 @@ const gameController = (() => {
 
     namesUnderTitleGrbbr.classList.remove('toggleHide');
     playerNames.setAttribute('style', 'visibility: hidden;');
-    namesUnderTitleGrbbr.innerText = firstName + "\n" + " vs " + "\n" + secName;
+    firstNameGrbbr.innerText = firstName + "   " + "(" + firstChosenTile + ")";
+    secNameGrbbr.innerText = secName + "   " + "(" + secChosenTile + ")";
   }
 
   playerLockIn.addEventListener('click', () => {
+    firstChosenTile = gameboard.findFirstChoice();
+    if (firstChosenTile == "X") {
+      secChosenTile = "O";
+    } else {
+      secChosenTile = "X";
+    }
+
+    console.log(gameboard.findFirstChoice());
+
     playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
   });
   
