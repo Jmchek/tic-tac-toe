@@ -20,5 +20,9 @@ conditions for winning
 3. get the names from playerMaker and shoutout the winner -->
 
 
-when the user clicks on the tile, if it's x flip to o DONE
-flip the toggle whenever this happens
+<!-- when the user clicks on the tile, if it's x flip to o DONE
+flip the toggle whenever this happens -->
+
+once the locked in button is pressed
+change the text in infoText
+every time a player chooses a tile, change the name to the other player in infoText

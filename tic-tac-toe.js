@@ -15,9 +15,8 @@ const gameboard = (() => {
       tile.addEventListener('click', () => {
         toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
         toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
-      });
-      tile.addEventListener('click', () => {
         toggleSwitch.checked = !toggleSwitch.checked;
+        gameController.infoTextUpdater();
       });
     });
     
@@ -219,8 +218,24 @@ const gameController = (() => {
     }
 
     playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
+
+    infoTextUpdater();
   });
+
+  //infoText changer function
+
+  //working here
+  function infoTextUpdater() {
+    let count = 0;
+    let firstPlayer = playerOneNameGrbbr.value;
+
+    if(count == 0) {
+      infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")";
+      count++;
+    }
+    
+  }
   
   
-    return {gameChecker, matchCountX, matchCountO, playerCreation};
+    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater};
   })();
