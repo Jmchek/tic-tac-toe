@@ -14,6 +14,10 @@ const gameboard = (() => {
     tileGrabber.forEach((tile, index) => {
       tile.addEventListener('click', () => {
         toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
+        toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
+      });
+      tile.addEventListener('click', () => {
+        toggleSwitch.checked = !toggleSwitch.checked;
       });
     });
     
@@ -77,7 +81,6 @@ const playerMaker = (name) => {
 
 //gameController is a module
 const gameController = (() => {
-  this.toggleSwitch = gameboard.toggleSwitch;
   this.tileGrabber = gameboard.tileGrabber;
   const startBtnGrbbr = document.querySelector('#start');
   const restartBtnGrbbr = document.querySelector('#restart');
@@ -90,6 +93,8 @@ const gameController = (() => {
   const namesUnderTitleGrbbr = document.querySelector('.namesUnderTitle');
   const firstNameGrbbr = document.querySelector('.namesUnderTitle :first-child');
   const secNameGrbbr = document.querySelector('.namesUnderTitle :nth-child(3)');
+  const infoText = document.querySelector('#infoText');
+  
   let matchCountX = 0;
   let matchCountO = 0;
   let winnerDetermined = false;
@@ -204,6 +209,7 @@ const gameController = (() => {
     secNameGrbbr.innerText = secName + "   " + "(" + secChosenTile + ")";
   }
 
+  //lock in button is pressed
   playerLockIn.addEventListener('click', () => {
     firstChosenTile = gameboard.findFirstChoice();
     if (firstChosenTile == "X") {
@@ -211,8 +217,6 @@ const gameController = (() => {
     } else {
       secChosenTile = "X";
     }
-
-    console.log(gameboard.findFirstChoice());
 
     playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
   });
