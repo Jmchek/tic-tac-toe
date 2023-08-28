@@ -13,10 +13,14 @@ const gameboard = (() => {
 
     tileGrabber.forEach((tile, index) => {
       tile.addEventListener('click', () => {
-        toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
-        toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
-        toggleSwitch.checked = !toggleSwitch.checked;
-        gameController.infoTextUpdater(toggleForm);
+        if(!gameController.winnerDetermined && !gameController.winnerFound) {
+          console.log(gameController.winnerDetermined);
+          console.log(gameController.winnerFound);
+          toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
+          toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
+          gameController.infoTextUpdater(toggleForm);
+          toggleSwitch.checked = !toggleSwitch.checked;
+        }
       });
     });
     
@@ -47,13 +51,13 @@ const gameboard = (() => {
 
     //toggleSwitch
     toggleSwitch.addEventListener('click', () => {
-      if (toggleForm == "X") {
-        toggleForm = "O";
-      } else {
-        toggleForm = "X";
+      if(!gameController.winnerDetermined && !gameController.winnerFound) {
+        if (toggleForm == "X") {
+          toggleForm = "O";
+        } else {
+          toggleForm = "X";
+        }
       }
-
-      console.log(findFirstChoice());
 
     });
 
@@ -100,8 +104,11 @@ const gameController = (() => {
   let firstChosenTile;
   let secChosenTile;
   let whichTile;
+  let winner;
+  let winnerFound = false;
 
   let playerOneName, playerTwoName;
+  let firstPlayer, secPlayer;
 
   let tileArr = [];
   let winnerArrX = [];
@@ -139,7 +146,13 @@ const gameController = (() => {
         case (winnerArrX.includes(1) && winnerArrX.includes(2) && winnerArrX.includes(3)) || 
         (winnerArrO.includes(1) && winnerArrO.includes(2) && winnerArrO.includes(3)): 
           console.log("win");
-          winnerDetermined = true;
+          // if (winnerArrX.length == 3) {
+          //   winnerInfoTextUpdater("X");
+          // } else {
+          //   winnerInfoTextUpdater("O");
+          // }
+          this.winnerDetermined = true;
+          // winnerInfoTextUpdater("X");
           break;
         case (winnerArrX.includes(4) && winnerArrX.includes(5) && winnerArrX.includes(6)) || 
         (winnerArrO.includes(4) && winnerArrO.includes(5) && winnerArrO.includes(6)):
@@ -220,7 +233,7 @@ const gameController = (() => {
 
     playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
 
-    infoTextUpdater(whichTile);
+    infoTextUpdater(firstChosenTile);
   });
 
   //infoText changer function
@@ -228,18 +241,35 @@ const gameController = (() => {
   //working here
   function infoTextUpdater(whichTile) {
     let count = 0;
-    let firstPlayer = playerOneNameGrbbr.value;
-    let secPlayer = playerTwoNameGrbbr.value;
+    firstPlayer = playerOneNameGrbbr.value;
+    secPlayer = playerTwoNameGrbbr.value;
 
     if(count == 0) {
       infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")";
       count++;
     }
 
-    (whichTile == firstChosenTile) ? infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")" : infoText.innerText = "Turn: " + secPlayer.toUpperCase() + " (" + secChosenTile + ")";
+    (whichTile == firstChosenTile && !winnerDetermined) ? infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")" : infoText.innerText = "Turn: " + secPlayer.toUpperCase() + " (" + secChosenTile + ")";
+
+    if(this.winnerDetermined) {
+      if (winnerArrX.length > winnerArrO.length) {
+            winnerInfoTextUpdater("X");
+            winnerFound = true;
+          } else {
+            winnerInfoTextUpdater("O");
+            winnerFound = true;
+          }
+    }
     
+  }
+
+  //working here
+  function winnerInfoTextUpdater(winner) {
+    if(!winnerFound) {
+      (winner == "X") ? infoText.innerText = firstPlayer.toUpperCase() + " is the winner!" : infoText.innerText = secPlayer.toUpperCase() + " is the winner!";
+    }
   }
   
   
-    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater};
+    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined, winnerFound};
   })();
