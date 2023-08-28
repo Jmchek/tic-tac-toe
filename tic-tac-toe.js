@@ -16,7 +16,7 @@ const gameboard = (() => {
         toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
         toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
         toggleSwitch.checked = !toggleSwitch.checked;
-        gameController.infoTextUpdater();
+        gameController.infoTextUpdater(toggleForm);
       });
     });
     
@@ -99,6 +99,7 @@ const gameController = (() => {
   let winnerDetermined = false;
   let firstChosenTile;
   let secChosenTile;
+  let whichTile;
 
   let playerOneName, playerTwoName;
 
@@ -219,20 +220,23 @@ const gameController = (() => {
 
     playerCreation(playerOneNameGrbbr.value, playerTwoNameGrbbr.value);
 
-    infoTextUpdater();
+    infoTextUpdater(whichTile);
   });
 
   //infoText changer function
 
   //working here
-  function infoTextUpdater() {
+  function infoTextUpdater(whichTile) {
     let count = 0;
     let firstPlayer = playerOneNameGrbbr.value;
+    let secPlayer = playerTwoNameGrbbr.value;
 
     if(count == 0) {
       infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")";
       count++;
     }
+
+    (whichTile == firstChosenTile) ? infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")" : infoText.innerText = "Turn: " + secPlayer.toUpperCase() + " (" + secChosenTile + ")";
     
   }
   
