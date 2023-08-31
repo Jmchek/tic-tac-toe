@@ -13,14 +13,12 @@ const gameboard = (() => {
 
     tileGrabber.forEach((tile, index) => {
       tile.addEventListener('click', () => {
-        if(!gameController.winnerDetermined && !gameController.winnerFound) {
-          console.log(gameController.winnerDetermined);
-          console.log(gameController.winnerFound);
-          toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
-          toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
-          gameController.infoTextUpdater(toggleForm);
-          toggleSwitch.checked = !toggleSwitch.checked;
-        }
+          if(!gameController.winnerDetermined) {
+            toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
+            toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
+            gameController.infoTextUpdater(toggleForm);
+            toggleSwitch.checked = !toggleSwitch.checked;
+          }
       });
     });
     
@@ -51,7 +49,7 @@ const gameboard = (() => {
 
     //toggleSwitch
     toggleSwitch.addEventListener('click', () => {
-      if(!gameController.winnerDetermined && !gameController.winnerFound) {
+      if(!gameController.winnerDetermined && !gameController.scratch) {
         if (toggleForm == "X") {
           toggleForm = "O";
         } else {
@@ -105,7 +103,7 @@ const gameController = (() => {
   let secChosenTile;
   let whichTile;
   let winner;
-  let winnerFound = false;
+  let scratch = false;
 
   let playerOneName, playerTwoName;
   let firstPlayer, secPlayer;
@@ -145,54 +143,44 @@ const gameController = (() => {
         //horizontal
         case (winnerArrX.includes(1) && winnerArrX.includes(2) && winnerArrX.includes(3)) || 
         (winnerArrO.includes(1) && winnerArrO.includes(2) && winnerArrO.includes(3)): 
-          console.log("win");
-          // if (winnerArrX.length == 3) {
-          //   winnerInfoTextUpdater("X");
-          // } else {
-          //   winnerInfoTextUpdater("O");
-          // }
           this.winnerDetermined = true;
-          // winnerInfoTextUpdater("X");
           break;
         case (winnerArrX.includes(4) && winnerArrX.includes(5) && winnerArrX.includes(6)) || 
         (winnerArrO.includes(4) && winnerArrO.includes(5) && winnerArrO.includes(6)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         case (winnerArrX.includes(7) && winnerArrX.includes(8) && winnerArrX.includes(9)) || 
         (winnerArrO.includes(7) && winnerArrO.includes(8) && winnerArrO.includes(9)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         //vertical
         case (winnerArrX.includes(1) && winnerArrX.includes(4) && winnerArrX.includes(7)) || 
         (winnerArrO.includes(1) && winnerArrO.includes(4) && winnerArrO.includes(7)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         case (winnerArrX.includes(2) && winnerArrX.includes(5) && winnerArrX.includes(8)) || 
         (winnerArrO.includes(2) && winnerArrO.includes(5) && winnerArrO.includes(8)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         case (winnerArrX.includes(3) && winnerArrX.includes(6) && winnerArrX.includes(9)) || 
         (winnerArrO.includes(3) && winnerArrO.includes(6) && winnerArrO.includes(9)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         //across
         case (winnerArrX.includes(1) && winnerArrX.includes(5) && winnerArrX.includes(9)) || 
         (winnerArrO.includes(1) && winnerArrO.includes(5) && winnerArrO.includes(9)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         case (winnerArrX.includes(3) && winnerArrX.includes(5) && winnerArrX.includes(7)) || 
         (winnerArrO.includes(3) && winnerArrO.includes(5) && winnerArrO.includes(7)):
-          console.log("win");
-          winnerDetermined = true;
+          this.winnerDetermined = true;
           break;
         default:
-          {if(!winnerDetermined && this.matchCountX > 3 && this.matchCountO > 3) {console.log("Cat's scratch!")};}
+          {if(!winnerDetermined && matchCountX > 3 && matchCountO > 3) {
+            this.scratch = true;
+            this.winnerDetermined = true;
+            winnerInfoTextUpdater("cat's scratch");
+          };}
       }
     }
   };
@@ -254,10 +242,8 @@ const gameController = (() => {
     if(this.winnerDetermined) {
       if (winnerArrX.length > winnerArrO.length) {
             winnerInfoTextUpdater("X");
-            winnerFound = true;
           } else {
             winnerInfoTextUpdater("O");
-            winnerFound = true;
           }
     }
     
@@ -265,11 +251,14 @@ const gameController = (() => {
 
   //working here
   function winnerInfoTextUpdater(winner) {
-    if(!winnerFound) {
-      (winner == "X") ? infoText.innerText = firstPlayer.toUpperCase() + " is the winner!" : infoText.innerText = secPlayer.toUpperCase() + " is the winner!";
+    (winner == firstChosenTile) ? infoText.innerText = firstPlayer.toUpperCase() + " is the winner!" : infoText.innerText = secPlayer.toUpperCase() + " is the winner!";
+    
+
+    if (winner == "cat's scratch") {
+            infoText.innerText = "Cat's scratch!";
     }
   }
   
   
-    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined, winnerFound};
+    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined};
   })();
