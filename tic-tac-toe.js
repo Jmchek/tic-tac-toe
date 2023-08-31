@@ -13,7 +13,7 @@ const gameboard = (() => {
 
     tileGrabber.forEach((tile, index) => {
       tile.addEventListener('click', () => {
-          if(!gameController.winnerDetermined) {
+          if(!gameController.winnerDetermined && !gameController.scratch) {
             toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
             toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
             gameController.infoTextUpdater(toggleForm);
@@ -49,7 +49,7 @@ const gameboard = (() => {
 
     //toggleSwitch
     toggleSwitch.addEventListener('click', () => {
-      if(!gameController.winnerDetermined && !gameController.scratch) {
+      if(!gameController.winnerDetermined) {
         if (toggleForm == "X") {
           toggleForm = "O";
         } else {
@@ -176,10 +176,9 @@ const gameController = (() => {
           this.winnerDetermined = true;
           break;
         default:
-          {if(!winnerDetermined && matchCountX > 3 && matchCountO > 3) {
+          {if(!this.winnerDetermined && this.matchCountX > 3 && this.matchCountO > 3) {
+            //working here
             this.scratch = true;
-            this.winnerDetermined = true;
-            winnerInfoTextUpdater("cat's scratch");
           };}
       }
     }
@@ -196,6 +195,8 @@ const gameController = (() => {
     toggleContainer.classList.add('toggleHide');
     hiddenToggleContainer.classList.remove('toggleHide');
     playerNames.setAttribute('style', 'visibility: hidden;');
+    playerOneName = null;
+    playerTwoName = null;
   });
 
 
@@ -226,7 +227,6 @@ const gameController = (() => {
 
   //infoText changer function
 
-  //working here
   function infoTextUpdater(whichTile) {
     let count = 0;
     firstPlayer = playerOneNameGrbbr.value;
@@ -237,28 +237,31 @@ const gameController = (() => {
       count++;
     }
 
-    (whichTile == firstChosenTile && !winnerDetermined) ? infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")" : infoText.innerText = "Turn: " + secPlayer.toUpperCase() + " (" + secChosenTile + ")";
+    (whichTile == firstChosenTile && !this.winnerDetermined) ? infoText.innerText = "Turn: " + firstPlayer.toUpperCase() + " (" + firstChosenTile + ")" : infoText.innerText = "Turn: " + secPlayer.toUpperCase() + " (" + secChosenTile + ")";
 
-    if(this.winnerDetermined) {
+    if(this.winnerDetermined && !this.scratch) {
       if (winnerArrX.length > winnerArrO.length) {
             winnerInfoTextUpdater("X");
           } else {
             winnerInfoTextUpdater("O");
           }
     }
+
+    if(this.scratch) {
+      winnerInfoTextUpdater("cat's scratch!");
+    }
     
   }
 
-  //working here
   function winnerInfoTextUpdater(winner) {
     (winner == firstChosenTile) ? infoText.innerText = firstPlayer.toUpperCase() + " is the winner!" : infoText.innerText = secPlayer.toUpperCase() + " is the winner!";
     
 
-    if (winner == "cat's scratch") {
+    if (winner == "cat's scratch!") {
             infoText.innerText = "Cat's scratch!";
     }
   }
   
   
-    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined};
+    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined, scratch};
   })();
