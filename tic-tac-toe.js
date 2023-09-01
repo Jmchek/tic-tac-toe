@@ -12,8 +12,9 @@ const gameboard = (() => {
     const tileGrabber = document.querySelectorAll('.tiles');
 
     tileGrabber.forEach((tile, index) => {
+
       tile.addEventListener('click', () => {
-          if(!gameController.winnerDetermined && !gameController.scratch) {
+          if(!gameController.winnerDetermined && !gameController.scratch && gameStarted) {
             toggleForm == "X" ? fillBoardX(index) : fillBoardO(index);
             toggleForm == "X" ? toggleForm = "O" : toggleForm = "X";
             gameController.infoTextUpdater(toggleForm);
@@ -104,6 +105,7 @@ const gameController = (() => {
   let whichTile;
   let winner;
   let scratch = false;
+  let gameStarted = false;
 
   let playerOneName, playerTwoName;
   let firstPlayer, secPlayer;
@@ -189,14 +191,22 @@ const gameController = (() => {
     toggleContainer.classList.remove('toggleHide');
     hiddenToggleContainer.classList.add('toggleHide');
     playerNames.setAttribute('style', 'visibility: visible;');
+    playerOneNameGrbbr.value = "";
+    playerTwoNameGrbbr.value = "";
   });
 
   restartBtnGrbbr.addEventListener('click', () => {
-    toggleContainer.classList.add('toggleHide');
-    hiddenToggleContainer.classList.remove('toggleHide');
+    infoText.innerText = "X or O for the first player? Decide!";
     playerNames.setAttribute('style', 'visibility: hidden;');
-    playerOneName = null;
-    playerTwoName = null;
+    namesUnderTitleGrbbr.classList.add('toggleHide');
+    this.playerOneName = null;
+    this.playerTwoName = null;
+
+    tileGrabber.forEach((tile, index) => {
+      if(tile.innerText) {
+        tile.innerText = "";
+      }
+    });
   });
 
 
@@ -211,8 +221,10 @@ const gameController = (() => {
     secNameGrbbr.innerText = secName + "   " + "(" + secChosenTile + ")";
   }
 
-  //lock in button is pressed
+  //lock in button
   playerLockIn.addEventListener('click', () => {
+    this.gameStarted = true;
+
     firstChosenTile = gameboard.findFirstChoice();
     if (firstChosenTile == "X") {
       secChosenTile = "O";
@@ -263,5 +275,5 @@ const gameController = (() => {
   }
   
   
-    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined, scratch};
+    return {gameChecker, matchCountX, matchCountO, playerCreation, infoTextUpdater, winnerInfoTextUpdater, winnerDetermined, scratch, playerOneName, playerTwoName, gameStarted};
   })();
